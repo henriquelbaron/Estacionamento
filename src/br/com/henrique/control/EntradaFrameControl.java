@@ -5,8 +5,12 @@
  */
 package br.com.henrique.control;
 
+import br.com.henrique.dao.impl.ServicoDaoImpl;
+import br.com.henrique.domain.Carro;
 import br.com.henrique.domain.Servico;
 import br.com.henrique.uteis.Datas;
+import br.com.henrique.uteis.Mensagem;
+import br.com.henrique.uteis.Uteis;
 import br.com.henrique.view.EntradaFrame;
 
 /**
@@ -14,23 +18,37 @@ import br.com.henrique.view.EntradaFrame;
  * @author ACER
  */
 public class EntradaFrameControl {
-    
+
     private Servico servico;
-    
+    private Carro carro;
+
     public EntradaFrameControl() {
-        EntradaFrame entradaFrame = new EntradaFrame();
-        entradaFrame.setVisible(true);
     }
-    
+
     public void carregarDadosAction() {
-        if (Validacao.placaExistente(EntradaFrame.tfPlaca)) {
-            
+        carro = Validacao.placaExistente(EntradaFrame.tfPlaca);
+        if (carro == null) {
+            PanelControl.abrirPanelAdicionarCondutor();
+        } else {
+            insereNovoServico(carro);
         }
     }
-    
-    public void carregarHora() {
+
+    public void carregarHoraeData() {
         EntradaFrame.tfHora.setText(Datas.pegarHoraAtual());
+        EntradaFrame.tfData.setText(Datas.pegarDataAtual());
     }
-    
-   
+
+    public void insereNovoServico(Carro c) {
+        servico = new Servico();
+        servico.setHoraEntrada(Datas.converteHoraEDataParaDate(EntradaFrame.tfHora.getText(), EntradaFrame.tfData.getText()));
+        servico.setCarro(c);
+        ServicoDaoImpl daoImpl = new ServicoDaoImpl();
+        if (daoImpl.inserir(servico)) {
+            Uteis.limparCamposTelaEntrada();
+            Mensagem.msg(Mensagem.SALVO_SUCESSO);
+            TelaEstacionamentoControl.carregarDadosTabela();
+        }
+    }
+
 }

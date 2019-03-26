@@ -22,10 +22,13 @@ public class Condutor {
     public Condutor() {
     }
 
-    public Condutor(Integer id, String nome, String tipo) {
-        this.id = id;
+    public Condutor(String nome, String tipo) {
         this.nome = nome;
         this.tipo = tipo;
+    }
+
+    public void setOnList(Carro c) {
+        carros.add(c);
     }
 
     public List<Carro> getCarros() {

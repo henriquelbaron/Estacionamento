@@ -11,16 +11,16 @@ import br.com.henrique.control.CadastroUsuarioControl;
  *
  * @author ACER
  */
-public class CadastrandoUsuarioPanel extends javax.swing.JPanel {
+public class CadastroUsuarioFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form CadastrandoUsuarioPanel
+     * Creates new form CadastroUsuarioFrame
      */
-    private CadastroUsuarioControl cadastroUsuarioControl;
+    private CadastroUsuarioControl control;
 
-    public CadastrandoUsuarioPanel() {
+    public CadastroUsuarioFrame() {
         initComponents();
-        cadastroUsuarioControl = new CadastroUsuarioControl();
+        control = new CadastroUsuarioControl();
     }
 
     /**
@@ -32,37 +32,17 @@ public class CadastrandoUsuarioPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
-        jFrame1 = new javax.swing.JFrame();
-        jFrame2 = new javax.swing.JFrame();
         jButton1 = new javax.swing.JButton();
 
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel4.setText("Cor:");
 
-        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
-        jFrame2.getContentPane().setLayout(jFrame2Layout);
-        jFrame2Layout.setHorizontalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame2Layout.setVerticalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel5.setText("Marca:");
 
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel6.setText("Modelo:");
+
+        labelCarros.setText("Carros");
 
         jLabel1.setText("Nome:");
 
@@ -74,24 +54,14 @@ public class CadastrandoUsuarioPanel extends javax.swing.JPanel {
 
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Servidor", "Público" }));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Cadastrar Cliente");
-
-        jLabel3.setText("Placa:");
-
-        jLabel4.setText("Cor:");
-
-        jLabel5.setText("Marca:");
-
-        jLabel6.setText("Modelo:");
-
-        labelCarros.setText("Carros");
-
         try {
-            tfPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-####")));
+            tfPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Cadastrar Cliente");
 
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -100,8 +70,10 @@ public class CadastrandoUsuarioPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        jLabel3.setText("Placa:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -146,7 +118,7 @@ public class CadastrandoUsuarioPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,8 +151,11 @@ public class CadastrandoUsuarioPanel extends javax.swing.JPanel {
                     .addComponent(jLabel6)
                     .addComponent(tfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addComponent(jButton1))
+                .addComponent(jButton1)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
@@ -188,21 +163,53 @@ public class CadastrandoUsuarioPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tfNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        cadastroUsuarioControl.salvarBotaoAction();        // TODO add your handling code here:
+        control.salvarBotaoAction();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CadastroUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CadastroUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CadastroUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CadastroUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CadastroUsuarioFrame().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static final javax.swing.JComboBox<String> cbTipo = new javax.swing.JComboBox<>();
     private javax.swing.JButton jButton1;
-    private javax.swing.JFrame jFrame1;
-    private javax.swing.JFrame jFrame2;
     public static final javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     public static final javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
     public static final javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
     public static final javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
     public static final javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
     public static final javax.swing.JLabel jLabel6 = new javax.swing.JLabel();
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     public static final javax.swing.JSeparator jSeparator1 = new javax.swing.JSeparator();
     public static final javax.swing.JLabel labelCarros = new javax.swing.JLabel();
     public static final javax.swing.JTextField tfCor = new javax.swing.JTextField();

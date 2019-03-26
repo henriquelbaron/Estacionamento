@@ -20,7 +20,7 @@ public class Validacao {
 
     public static boolean placa(JFormattedTextField tf) {
         if (tf.getText() == null || tf.getText().trim().isEmpty()) {
-            tf.setForeground(Color.red);
+            tf.setBackground(Color.red);
             return true;
         }
         return false;
@@ -34,9 +34,9 @@ public class Validacao {
         return false;
     }
 
-    public static boolean placaExistente(JFormattedTextField tf) {
+    public static Carro placaExistente(JFormattedTextField tf) {
         CarroDaoImpl carroDaoImpl = new CarroDaoImpl();
         Carro carro = carroDaoImpl.pesquisarPlaca(tf.getText());
-        return carro == null;
+        return carro;
     }
 }

@@ -8,6 +8,7 @@ package br.com.henrique.view;
 import br.com.henrique.control.CadastroUsuarioControl;
 import br.com.henrique.control.EntradaFrameControl;
 import br.com.henrique.control.PanelControl;
+import br.com.henrique.control.TelaEstacionamentoControl;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
@@ -24,6 +25,7 @@ public class TelaEstacionamento extends javax.swing.JFrame {
 
     public TelaEstacionamento() {
         initComponents();
+        TelaEstacionamentoControl.carregarDadosTabela();
     }
 
     /**
@@ -37,24 +39,34 @@ public class TelaEstacionamento extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tableCarrosAtivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Placa", "Proprietario", "Hora de Entrada"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tableCarrosAtivos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 362, 110));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 540, 310));
 
         jButton1.setText("ADD");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -62,13 +74,28 @@ public class TelaEstacionamento extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 130, -1, -1));
+
+        jButton2.setText("Liberar Saida");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, -1, -1));
+
+        jMenu1.setText("Menu");
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Arquivos");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        PanelControl.panelAdicinarEntrada();
+        PanelControl.abirPanelAdicinarEntrada();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -108,6 +135,11 @@ public class TelaEstacionamento extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     public static final javax.swing.JTable tableCarrosAtivos = new javax.swing.JTable();
     // End of variables declaration//GEN-END:variables

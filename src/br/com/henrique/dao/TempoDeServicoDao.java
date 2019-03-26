@@ -20,4 +20,5 @@ public interface TempoDeServicoDao<H> extends BaseDao<H> {
     public List<H> pesquisarPorSaida(Date s1, Date s2);
 
     public List<H> pesquisarPorAtivo(Boolean termo);
+    
 }

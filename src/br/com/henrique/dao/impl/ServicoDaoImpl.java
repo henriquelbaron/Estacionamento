@@ -8,10 +8,13 @@ package br.com.henrique.dao.impl;
 import br.com.henrique.dao.CarroDao;
 import br.com.henrique.dao.TempoDeServicoDao;
 import br.com.henrique.dao.factory.conexaoDao;
+import br.com.henrique.domain.Carro;
+import br.com.henrique.domain.Condutor;
 import br.com.henrique.domain.Servico;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,19 +22,16 @@ import java.util.List;
  *
  * @author ACER
  */
-public class TempoDeServicoDaoImpl extends conexaoDao implements TempoDeServicoDao<Servico> {
+public class ServicoDaoImpl extends conexaoDao implements TempoDeServicoDao<Servico> {
 
     private Servico servico;
 
     @Override
     public boolean inserir(Servico objeto) {
         try {
-            pstt = conn.prepareStatement("INSERT INTO servico (hora_entrada, hora_saida, valor,ativo, idCliente) values (?,?,?,?,?)");
-            pstt.setDate(1, new Date(objeto.getHoraEntrada().getTime()));
-            pstt.setDate(2, new Date(objeto.getHoraSaida().getTime()));
-            pstt.setDouble(3, objeto.getValor());
-            pstt.setBoolean(4, objeto.isAtivo());
-            pstt.setInt(5, objeto.getCondutor().getId());
+            pstt = conn.prepareStatement("INSERT INTO servico (hora_entrada, idCliente) values (?,?)");
+            pstt.setTimestamp(1, new Timestamp(objeto.getHoraEntrada().getTime()));
+            pstt.setInt(2, objeto.getCarro().getCondutor().getId());
             return pstt.executeUpdate() != 0;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -44,8 +44,8 @@ public class TempoDeServicoDaoImpl extends conexaoDao implements TempoDeServicoD
     public boolean update(Servico objeto) {
         try {
             pstt = conn.prepareStatement("UPDATE servico set hora_entrada = ?, hora_saida = ?, valor = ? ativo = ? where id = ?");
-            pstt.setDate(1, new Date(objeto.getHoraEntrada().getTime()));
-            pstt.setDate(2, new Date(objeto.getHoraSaida().getTime()));
+            pstt.setTimestamp(1, new Timestamp(objeto.getHoraEntrada().getTime()));
+            pstt.setTimestamp(2, new Timestamp(objeto.getHoraSaida().getTime()));
             pstt.setDouble(3, objeto.getValor());
             pstt.setBoolean(4, objeto.isAtivo());
             pstt.setInt(5, objeto.getId());
@@ -67,11 +67,10 @@ public class TempoDeServicoDaoImpl extends conexaoDao implements TempoDeServicoD
             if (rs.next()) {
                 servico = new Servico();
                 servico.setId(id);
-                servico.setHoraEntrada(rs.getDate("hora_entrada"));
-                servico.setHoraSaida(rs.getDate("hora_saida"));
+                servico.setHoraEntrada(rs.getTimestamp("hora_entrada"));
+                servico.setHoraSaida(rs.getTimestamp("hora_saida"));
                 servico.setValor(rs.getDouble("valor"));
                 servico.setAtivo(rs.getBoolean("ativo"));
-                servico.setCondutor(condutorDaoImpl.pesquisar(rs.getInt("idCliente")));
             }
             return servico;
         } catch (SQLException e) {
@@ -125,15 +124,13 @@ public class TempoDeServicoDaoImpl extends conexaoDao implements TempoDeServicoD
 
     private List<Servico> passaDadosParaObjeto(ResultSet rs) throws SQLException {
         List<Servico> servicos = new ArrayList<>();
-        CondutorDaoImpl condutorDaoImpl = new CondutorDaoImpl();
         while (rs.next()) {
             servico = new Servico();
             servico.setId(rs.getInt("id"));
-            servico.setHoraEntrada(rs.getDate("hora_entrada"));
-            servico.setHoraSaida(rs.getDate("hora_saida"));
+            servico.setHoraEntrada(rs.getTimestamp("hora_entrada"));
+            servico.setHoraSaida(rs.getTimestamp("hora_saida"));
             servico.setValor(rs.getDouble("valor"));
             servico.setAtivo(rs.getBoolean("ativo"));
-            servico.setCondutor(condutorDaoImpl.pesquisar(rs.getInt("idCliente")));
             servicos.add(servico);
         }
         return servicos;
@@ -163,7 +160,51 @@ public class TempoDeServicoDaoImpl extends conexaoDao implements TempoDeServicoD
 
     @Override
     public List<Servico> pesquisarPorAtivo(Boolean termo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            List<Servico> servicos = new ArrayList<>();
+            pstt = conn.prepareStatement("select c.placa,cl.nome, s.hora_entrada, cl.tipo from carro as c inner join cliente as cl on cl.id = c.idCliente "
+                    + "inner join servico as s on s.idCliente=cl.id where ativo = ?");
+            pstt.setBoolean(1, termo);
+            rs = pstt.executeQuery();
+            while (rs.next()) {
+                servico = new Servico();
+                Carro c = new Carro();
+                c.setPlaca(rs.getString("placa"));
+                c.setCondutor(new Condutor(rs.getString("nome"), rs.getString("tipo")));
+                servico.setCarro(c);
+                servico.setHoraEntrada(rs.getTimestamp("hora_entrada"));
+                servicos.add(servico);
+            }
+            return servicos;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Servico> pesquisarPorAtivo() {
+        try {
+            CondutorDaoImpl condutorDaoImpl = new CondutorDaoImpl();
+            List<Servico> servicos = new ArrayList<>();
+            pstt = conn.prepareStatement("select c.*,cl.*, s.* from carro as c inner join cliente as cl on cl.id = c.idCliente "
+                    + "inner join servico as s on s.idCliente=cl.id");
+            rs = pstt.executeQuery();
+            while (rs.next()) {
+                servico = new Servico();
+                servico.setCondutor(condutorDaoImpl.pesquisar(rs.getInt("id")));
+                servico.setHoraEntrada(rs.getTimestamp("hora_entrada"));
+                servico.setHoraSaida(rs.getTimestamp("hora_saida"));
+                servico.setAtivo(rs.getBoolean("ativo"));
+                servico.setValor(rs.getDouble("valor"));
+                servicos.add(servico);
+            }
+            return servicos;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

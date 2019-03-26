@@ -66,6 +66,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
 
     @Override
     public Condutor pesquisar(Integer id) {
+        carroDaoImpl = new CarroDaoImpl();
         try {
             pstt = conn.prepareStatement("Select * from cliente where id = ?");
             pstt.setInt(1, id);
@@ -159,6 +160,5 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
             System.out.println("aaaaa" + e.getMessage());
         }
     }
-
 
 }

@@ -10,7 +10,8 @@ import br.com.henrique.dao.impl.CondutorDaoImpl;
 import br.com.henrique.domain.Carro;
 import br.com.henrique.domain.Condutor;
 import br.com.henrique.uteis.Mensagem;
-import br.com.henrique.view.CadastrandoUsuarioPanel;
+import br.com.henrique.uteis.Uteis;
+import br.com.henrique.view.CadastroUsuarioFrame;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -32,34 +33,33 @@ public class CadastroUsuarioControl {
     }
 
     public void salvarBotaoAction() {
-        if (Validacao.placa(CadastrandoUsuarioPanel.tfPlaca) || Validacao.string(CadastrandoUsuarioPanel.tfNome)) {
+        if (Validacao.placa(CadastroUsuarioFrame.tfPlaca) || Validacao.string(CadastroUsuarioFrame.tfNome)) {
             Mensagem.msgErro(Mensagem.CAMPO_VAZIO);
             return;
         }
         if (condutor == null) {
             salvarCondutorAction();
+
         }
     }
 
     public void salvarCondutorAction() {
         condutor = new Condutor();
         condutor.setCarros(carros = new ArrayList());
-        condutor.setNome(CadastrandoUsuarioPanel.tfNome.getText());
-        condutor.setTipo(CadastrandoUsuarioPanel.cbTipo.getSelectedItem().toString());
+        condutor.setNome(CadastroUsuarioFrame.tfNome.getText());
+        condutor.setTipo(CadastroUsuarioFrame.cbTipo.getSelectedItem().toString());
 
         carro = new Carro();
-        carro.setPlaca(CadastrandoUsuarioPanel.tfPlaca.getText());
-        carro.setMarca(CadastrandoUsuarioPanel.tfMarca.getText());
-        carro.setModelo(CadastrandoUsuarioPanel.tfModelo.getText());
-        carro.setCor(CadastrandoUsuarioPanel.tfCor.getText());
+        carro.setPlaca(CadastroUsuarioFrame.tfPlaca.getText());
+        carro.setMarca(CadastroUsuarioFrame.tfMarca.getText());
+        carro.setModelo(CadastroUsuarioFrame.tfModelo.getText());
+        carro.setCor(CadastroUsuarioFrame.tfCor.getText());
         carros.add(carro);
 
         condutor.setCarros(carros);
         if (condutorDaoImpl.inserir(condutor)) {
             Mensagem.msg(Mensagem.SALVO_SUCESSO);
-            if (Mensagem.msgOpcao(Mensagem.REPETIR_OPERACAO) == 0) {
-                
-            }
+            Uteis.limparCamposTelaCadastro();
         }
     }
 }

@@ -6,6 +6,7 @@
 package br.com.henrique.domain;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -14,12 +15,12 @@ import java.util.Date;
 public class Servico {
 
     private Integer id;
-    private Condutor condutor;
     private Date horaEntrada;
     private Date horaSaida;
     private Double valor;
     private boolean ativo;
     private Carro carro;
+    private Condutor condutor;
 
     public Servico() {
 
@@ -27,10 +28,17 @@ public class Servico {
 
     public Servico(Integer id, Condutor condutor, Date horaEntrada, Date horaSaida, Double valor) {
         this.id = id;
-        this.condutor = condutor;
         this.horaEntrada = horaEntrada;
         this.horaSaida = horaSaida;
         this.valor = valor;
+    }
+
+    public Condutor getCondutor() {
+        return condutor;
+    }
+
+    public void setCondutor(Condutor condutor) {
+        this.condutor = condutor;
     }
 
     public Carro getCarro() {
@@ -55,14 +63,6 @@ public class Servico {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Condutor getCondutor() {
-        return condutor;
-    }
-
-    public void setCondutor(Condutor condutor) {
-        this.condutor = condutor;
     }
 
     public Date getHoraEntrada() {

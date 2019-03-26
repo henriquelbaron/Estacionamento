@@ -169,7 +169,9 @@ public class CarroDaoImpl extends conexaoDao implements CarroDao<Carro> {
                 carro.setModelo(rs.getString("modelo"));
                 carro.setMarca(rs.getString("marca"));
                 int idCliente = rs.getInt("idCliente");
-                carro.setCondutor(condutorDaoImpl.pesquisar(idCliente));
+                Condutor c = new Condutor();
+                c.setId(idCliente);
+                carro.setCondutor(new Condutor());
                 carros.add(carro);
             }
             return carros;

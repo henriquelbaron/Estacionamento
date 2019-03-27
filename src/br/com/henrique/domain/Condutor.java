@@ -27,6 +27,15 @@ public class Condutor {
         this.tipo = tipo;
     }
 
+    public boolean verificaPlacaExistente(String placa) {
+        for (Carro carro : carros) {
+            if (carro.getPlaca().equalsIgnoreCase(placa)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setOnList(Carro c) {
         carros.add(c);
     }

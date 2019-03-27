@@ -52,7 +52,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
     @Override
     public boolean update(Condutor objeto) {
         try {
-            pstt = conn.prepareStatement("UPDATE cliente SET  nome = ? tipo= ? where id = ?", Statement.RETURN_GENERATED_KEYS);
+            pstt = conn.prepareStatement("UPDATE cliente SET  nome = ?, tipo= ? where id = ?", Statement.RETURN_GENERATED_KEYS);
             pstt.setString(1, objeto.getNome());
             pstt.setString(2, objeto.getTipo());
             pstt.setInt(3, objeto.getId());
@@ -123,6 +123,28 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Condutor pesquisaPorNome(String nome) {
+        try {
+            carroDaoImpl = new CarroDaoImpl();
+            pstt = conn.prepareStatement("SELECT *FROM cliente WHERE nome = ?");
+            pstt.setString(1, nome);
+            rs = pstt.executeQuery();
+            if (rs.next()) {
+                condutor = new Condutor();
+                condutor.setId(rs.getInt("id"));
+                condutor.setNome(nome);
+                condutor.setTipo(rs.getString("tipo"));
+                condutor.setCarros(carroDaoImpl.pesquisarCarrosDoCondutor(rs.getInt("id")));
+                return condutor;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao pesquisar po nome " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
     @Override
     public List<Condutor> pesquisarTodosTermo(String termo) {
         try {
@@ -157,7 +179,8 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
                 }
             }
         } catch (Exception e) {
-            System.out.println("aaaaa" + e.getMessage());
+            System.out.println("Erro ao gravar Carro " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

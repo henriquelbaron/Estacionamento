@@ -7,8 +7,11 @@ package br.com.henrique.control;
 
 import br.com.henrique.dao.impl.ServicoDaoImpl;
 import br.com.henrique.domain.Servico;
+import br.com.henrique.negocio.Negocio;
 import br.com.henrique.uteis.Datas;
 import br.com.henrique.uteis.Mensagem;
+import br.com.henrique.view.EntradaFrame;
+import br.com.henrique.view.TESTE;
 import br.com.henrique.view.TelaEstacionamento;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -20,12 +23,11 @@ import javax.swing.table.DefaultTableModel;
 public class TelaEstacionamentoControl {
 
     private static List<Servico> servicos;
-    private Servico servico;
 
     public static void carregarDadosTabela() {
         ServicoDaoImpl servicoDaoImpl = new ServicoDaoImpl();
         servicos = servicoDaoImpl.pesquisarPorAtivo(true);
-        DefaultTableModel model = (DefaultTableModel) TelaEstacionamento.tableCarrosAtivos.getModel();
+        DefaultTableModel model = (DefaultTableModel) TESTE.tableCarrosEstacionados.getModel();
         model.setRowCount(0);
         for (Servico servico : servicos) {
             model.addRow(new Object[]{
@@ -53,7 +55,8 @@ public class TelaEstacionamentoControl {
         if (Mensagem.msgOpcao(Mensagem.TEM_CERTEZA) == 1) {
             return;
         }
-        
+        s.setHoraSaida(Datas.converteHoraEDataParaDate(EntradaFrame.tfHora.getText(), EntradaFrame.tfData.getText()));
+        s.setValor(Negocio.calcularValorDoEstacionamento(s));
     }
 
 }

@@ -21,45 +21,46 @@ import javax.swing.DefaultComboBoxModel;
  * @author ACER
  */
 public class CadastroUsuarioControl {
-
+    
     Carro carro;
     Condutor condutor;
     CondutorDaoImpl condutorDaoImpl;
     CarroDaoImpl carroDaoImpl;
     List<Carro> carros;
-
+    
     public CadastroUsuarioControl() {
         condutorDaoImpl = new CondutorDaoImpl();
     }
-
+    
     public void salvarBotaoAction() {
-        if (Validacao.placa(CadastroUsuarioFrame.tfPlaca) || Validacao.string(CadastroUsuarioFrame.tfNome)) {
+        if (Validacao.formatedTFVazio(CadastroUsuarioFrame.tfPlaca) || Validacao.tfVazio(CadastroUsuarioFrame.tfNome)) {
             Mensagem.msgErro(Mensagem.CAMPO_VAZIO);
             return;
         }
         if (condutor == null) {
             salvarCondutorAction();
-
+            
         }
     }
-
+    
     public void salvarCondutorAction() {
         condutor = new Condutor();
         condutor.setCarros(carros = new ArrayList());
         condutor.setNome(CadastroUsuarioFrame.tfNome.getText());
         condutor.setTipo(CadastroUsuarioFrame.cbTipo.getSelectedItem().toString());
-
+        
         carro = new Carro();
         carro.setPlaca(CadastroUsuarioFrame.tfPlaca.getText());
         carro.setMarca(CadastroUsuarioFrame.tfMarca.getText());
         carro.setModelo(CadastroUsuarioFrame.tfModelo.getText());
         carro.setCor(CadastroUsuarioFrame.tfCor.getText());
+        carro.setAtivo(false);
         carros.add(carro);
-
+        
         condutor.setCarros(carros);
         if (condutorDaoImpl.inserir(condutor)) {
             Mensagem.msg(Mensagem.SALVO_SUCESSO);
-            Uteis.limparCamposTelaCadastro();
+            Uteis.limparCamposCadastro();
         }
     }
 }

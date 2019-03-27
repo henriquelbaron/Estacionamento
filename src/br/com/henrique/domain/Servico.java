@@ -18,9 +18,7 @@ public class Servico {
     private Date horaEntrada;
     private Date horaSaida;
     private Double valor;
-    private boolean ativo;
     private Carro carro;
-    private Condutor condutor;
 
     public Servico() {
 
@@ -33,14 +31,6 @@ public class Servico {
         this.valor = valor;
     }
 
-    public Condutor getCondutor() {
-        return condutor;
-    }
-
-    public void setCondutor(Condutor condutor) {
-        this.condutor = condutor;
-    }
-
     public Carro getCarro() {
         return carro;
     }
@@ -49,13 +39,7 @@ public class Servico {
         this.carro = carro;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
+   
 
     public Integer getId() {
         return id;

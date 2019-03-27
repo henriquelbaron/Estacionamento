@@ -17,8 +17,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.Duration;
 import org.joda.time.Hours;
+import org.joda.time.Minutes;
+import org.joda.time.Period;
 
 /**
  *
@@ -27,7 +31,18 @@ import org.joda.time.Hours;
 public class Testes {
 
     public static void main(String[] args) throws SQLException {
-        Date d1 = Datas.pegarDataNow("16:22 26/03/2019");
-        Date d2 = Datas.pegarDataNow("19:23 27/04/2019");
+        Date d1 = Datas.pegarDataNow("16:22 27/04/2019");
+        Date d2 = Datas.pegarDataNow("17:32 27/04/2019");
+        DateTime start = new DateTime(d1);
+        DateTime end = new DateTime(d2);
+        Duration duration = new Duration(start, end);
+        Minutes m = Minutes.minutesBetween(start, end);
+        double d = (double) m.getMinutes() / 60;
+        double resto = (double) m.getMinutes() % 60;
+        if (resto <= 10) {
+            d++;
+        }
+        System.out.println((int)d);
+
     }
 }

@@ -28,13 +28,14 @@ public class PanelControl {
     public static void chamaTelaEstacionamento() {
         FRAME = new TelaEstacionamento();
         FRAME.setTitle("Estacionamento");
-        FRAME.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        FRAME.pack();
         FRAME.setVisible(true);
     }
 
     public static void abrirPanelAdicionarCondutor() {
         CADASTRO_USUARIO = new CadastroUsuarioFrame();
         CADASTRO_USUARIO.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        CADASTRO_USUARIO.pack();
         CADASTRO_USUARIO.setVisible(true);
     }
 

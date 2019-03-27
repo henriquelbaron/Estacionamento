@@ -25,15 +25,17 @@ public class CarroDaoImpl extends conexaoDao implements CarroDao<Carro> {
     @Override
     public boolean inserir(Carro objeto) {
         try {
-            pstt = conn.prepareStatement("INSERT INTO carro (placa,cor, modelo, marca, idCliente) values (?,?,?,?,?)");
+            pstt = conn.prepareStatement("INSERT INTO carro (placa,cor, modelo, marca, ativo,idCliente) values (?,?,?,?,?,?)");
             pstt.setString(1, objeto.getPlaca());
             pstt.setString(2, objeto.getCor());
             pstt.setString(3, objeto.getModelo());
             pstt.setString(4, objeto.getMarca());
-            pstt.setInt(5, objeto.getCondutor().getId());
-            return pstt.executeUpdate() != 0;
+            pstt.setBoolean(5, objeto.getAtivo());
+            pstt.setInt(6, objeto.getCondutor().getId());
+            return pstt.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Erro ao inserir novo carro " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -41,16 +43,18 @@ public class CarroDaoImpl extends conexaoDao implements CarroDao<Carro> {
     @Override
     public boolean update(Carro objeto) {
         try {
-            pstt = conn.prepareStatement("UPDATE carro SET placa = ?, cor = ?,modelo = ?, marca= ?, idCliente = ? where id = ?");
+            pstt = conn.prepareStatement("UPDATE carro SET placa = ?, cor = ?,modelo = ?, marca= ?,ativo = ?, idCliente = ? where id = ?");
             pstt.setString(1, objeto.getPlaca());
             pstt.setString(2, objeto.getCor());
             pstt.setString(3, objeto.getModelo());
             pstt.setString(4, objeto.getMarca());
-            pstt.setInt(5, objeto.getCondutor().getId());
-            pstt.setInt(5, objeto.getId());
+            pstt.setBoolean(5, objeto.getAtivo());
+            pstt.setInt(6, objeto.getCondutor().getId());
+            pstt.setInt(7, objeto.getId());
             return pstt.executeUpdate() != 0;
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar carro " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -69,12 +73,14 @@ public class CarroDaoImpl extends conexaoDao implements CarroDao<Carro> {
                 carro.setCor(rs.getString("cor"));
                 carro.setModelo(rs.getString("modelo"));
                 carro.setMarca(rs.getString("marca"));
+                carro.setAtivo(rs.getBoolean("ativo"));
                 int idCliente = rs.getInt("idCliente");
                 carro.setCondutor(condutorDaoImpl.pesquisar(idCliente));
                 return carro;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar" + e.getMessage());
+            e.printStackTrace();
             return null;
         }
         return null;
@@ -94,6 +100,7 @@ public class CarroDaoImpl extends conexaoDao implements CarroDao<Carro> {
                 carro.setCor(rs.getString("cor"));
                 carro.setModelo(rs.getString("modelo"));
                 carro.setMarca(rs.getString("marca"));
+                carro.setAtivo(rs.getBoolean("ativo"));
                 int idCliente = rs.getInt("idCliente");
                 carro.setCondutor(condutorDaoImpl.pesquisar(idCliente));
                 carros.add(carro);
@@ -195,12 +202,14 @@ public class CarroDaoImpl extends conexaoDao implements CarroDao<Carro> {
                 carro.setCor(rs.getString("cor"));
                 carro.setModelo(rs.getString("modelo"));
                 carro.setMarca(rs.getString("marca"));
+                carro.setAtivo(rs.getBoolean("ativo"));
                 int idCliente = rs.getInt("idCliente");
                 carro.setCondutor(condutorDaoImpl.pesquisar(idCliente));
                 return carro;
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao atualizar" + e.getMessage());
+            System.out.println("Erro ao pesquisar por id " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
         return null;

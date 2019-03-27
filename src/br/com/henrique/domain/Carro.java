@@ -18,6 +18,7 @@ public class Carro {
     private String cor;
     private String marca;
     private String modelo;
+    private Boolean ativo;
     private List<Servico> tempoDeServicos;
     private Condutor condutor;
 
@@ -31,6 +32,22 @@ public class Carro {
         this.marca = marca;
         this.modelo = modelo;
         this.condutor = condutor;
+    }
+
+    public List<Servico> getTempoDeServicos() {
+        return tempoDeServicos;
+    }
+
+    public void setTempoDeServicos(List<Servico> tempoDeServicos) {
+        this.tempoDeServicos = tempoDeServicos;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public String getModelo() {

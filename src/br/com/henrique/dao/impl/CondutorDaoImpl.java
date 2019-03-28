@@ -54,8 +54,8 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
             pstt = conn.prepareStatement("UPDATE cliente SET  nome = ?, tipo= ?,ativo= ? where id = ?", Statement.RETURN_GENERATED_KEYS);
             pstt.setString(1, objeto.getNome());
             pstt.setString(2, objeto.getTipo());
-            pstt.setInt(3, objeto.getId());
-            pstt.setBoolean(4, objeto.getAtivo());
+            pstt.setBoolean(3, objeto.getAtivo());
+            pstt.setInt(4, objeto.getId());
             gravarCarro(objeto);
             return pstt.executeUpdate() != 0;
         } catch (SQLException e) {
@@ -91,7 +91,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
     public List<Condutor> pesquisarTodos() {
         try {
             List<Condutor> condutors = new ArrayList<>();
-            pstt = conn.prepareStatement("SELECT * FROM cliente");
+            pstt = conn.prepareStatement("SELECT * FROM cliente where ativo = true");
             rs = pstt.executeQuery();
             while (rs.next()) {
                 condutor = new Condutor();
@@ -175,7 +175,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
     public void gravarCarro(Condutor c) {
         try {
             carroDaoImpl = new CarroDaoImpl();
-            carroDaoImpl.excluir(c.getId());
+//            carroDaoImpl.excluir(c.getId());
             if (c.getCarros() != null && !c.getCarros().isEmpty()) {
                 for (Carro carro : c.getCarros()) {
                     carro.setCondutor(c);

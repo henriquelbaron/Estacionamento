@@ -11,6 +11,7 @@ import br.com.henrique.dao.impl.ServicoDaoImpl;
 import br.com.henrique.domain.Carro;
 import br.com.henrique.domain.Condutor;
 import br.com.henrique.domain.Servico;
+import br.com.henrique.persistence.PersistenceDao;
 import br.com.henrique.uteis.Datas;
 import br.com.henrique.uteis.Uteis;
 import br.com.henrique.view.TESTE;
@@ -49,10 +50,9 @@ public class TestePanelControl {
         return servicos;
     }
 
-    public static void carregarCliente() {
+    public static List<Condutor> carregarCliente() {
         List<Condutor> condutors = new ArrayList<>();
-        CondutorDaoImpl condutorDaoImpl = new CondutorDaoImpl();
-        condutors = condutorDaoImpl.pesquisarTodos();
+        condutors = PersistenceDao.getCondutor().pesquisarTodos();
         String[] colunas = {"Id", "Nome", "Tipo"};
         String[][] dados = new String[condutors.size()][colunas.length];
         for (int i = 0; i < condutors.size(); i++) {
@@ -63,9 +63,10 @@ public class TestePanelControl {
         }
         DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
         TESTE.tableClientes1.setModel(modelo);
+        return condutors;
     }
 
-    public static void carregarCarros() {
+    public static List<Carro> carregarCarros() {
         List<Carro> carros = new ArrayList<>();
         CarroDaoImpl carroDaoImpl = new CarroDaoImpl();
         carros = carroDaoImpl.pesquisarTodos();
@@ -78,14 +79,16 @@ public class TestePanelControl {
             dados[i][2] = c.getCor();
             dados[i][3] = c.getModelo();
             dados[i][4] = c.getMarca();
-            dados[i][5] = c.getAtivo().toString();
+            dados[i][5] = c.getAtivo() == true ? "Sim" : "Não";
             dados[i][6] = c.getCondutor().getNome();
         }
         DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
         TESTE.tableCarros.setModel(modelo);
+        return carros;
     }
 
-    public static void carregarServicos() {
+    public static List<Servico> carregarServicos() {
+        Double valorTotal = 0.0;
         List<Servico> servicos = new ArrayList<>();
         ServicoDaoImpl servicoDaoImpl = new ServicoDaoImpl();
         servicos = servicoDaoImpl.pesquisarTodos();
@@ -96,11 +99,14 @@ public class TestePanelControl {
             dados[i][0] = s.getId().toString();
             dados[i][1] = Datas.converterDateParaString(s.getHoraEntrada());
             dados[i][2] = Datas.converterDateParaString(s.getHoraSaida()) == null ? " " : Datas.converterDateParaString(s.getHoraSaida());
+            valorTotal += s.getValor() == null ? 0.0 : s.getValor();
             dados[i][3] = "R$ " + Uteis.formatarDouble(s.getValor() == null ? 0.0 : s.getValor());
             dados[i][4] = s.getCarro().getCondutor().getNome();
             dados[i][5] = s.getCarro().getPlaca();
         }
         DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
         TESTE.tableServicos.setModel(modelo);
+        TESTE.labelValorTotal.setText("Total: " + Uteis.formatarDouble(valorTotal) + " R$");
+        return servicos;
     }
 }

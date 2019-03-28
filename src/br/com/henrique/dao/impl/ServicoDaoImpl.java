@@ -44,8 +44,8 @@ public class ServicoDaoImpl extends conexaoDao implements TempoDeServicoDao<Serv
             pstt.setTimestamp(1, new Timestamp(objeto.getHoraEntrada().getTime()));
             pstt.setTimestamp(2, new Timestamp(objeto.getHoraSaida().getTime()));
             pstt.setDouble(3, objeto.getValor());
-            pstt.setInt(4, objeto.getId());
-            pstt.setBoolean(5, objeto.getAtivo());
+            pstt.setBoolean(4, objeto.getAtivo());
+            pstt.setInt(5, objeto.getId());
             CarroDaoImpl carroDaoImpl = new CarroDaoImpl();
             carroDaoImpl.update(objeto.getCarro());
             return pstt.executeUpdate() != 0;

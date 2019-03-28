@@ -21,6 +21,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Duration;
 import org.joda.time.Hours;
+import org.joda.time.Interval;
 import org.joda.time.Minutes;
 import org.joda.time.Period;
 
@@ -32,17 +33,19 @@ public class Testes {
 
     public static void main(String[] args) throws SQLException {
         Date d1 = Datas.pegarDataNow("16:22 27/04/2019");
-        Date d2 = Datas.pegarDataNow("17:32 27/04/2019");
+        Date d2 = Datas.pegarDataNow("15:32 27/04/2019");
         DateTime start = new DateTime(d1);
+        System.out.println(start);
         DateTime end = new DateTime(d2);
+        System.out.println(end);
         Duration duration = new Duration(start, end);
+        System.out.println(duration);
         Minutes m = Minutes.minutesBetween(start, end);
-        double d = (double) m.getMinutes() / 60;
-        double resto = (double) m.getMinutes() % 60;
-        if (resto <= 10) {
-            d++;
-        }
-        System.out.println((int)d);
-
+        System.out.println(m);
+        Minutes m1 = Minutes.minutesBetween(start, end);
+        System.out.println(m1);
+        Interval interval = Interval.parse(d1 + "/" + d2);
+        System.out.println(interval);
+        String s = m.toString();
     }
 }

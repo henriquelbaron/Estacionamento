@@ -5,16 +5,16 @@
  */
 package br.com.henrique.control;
 
-import br.com.henrique.dao.impl.CarroDaoImpl;
 import br.com.henrique.dao.impl.CondutorDaoImpl;
 import br.com.henrique.domain.Carro;
 import br.com.henrique.domain.Condutor;
-import br.com.henrique.domain.Servico;
+import br.com.henrique.persistence.PersistenceDao;
 import br.com.henrique.uteis.Mensagem;
 import br.com.henrique.uteis.Uteis;
 import br.com.henrique.view.TESTE;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 
 /**
  *
@@ -24,14 +24,12 @@ public class TesteClienteControl {
 
     private Condutor condutor;
     private Carro carro;
-    private CondutorDaoImpl condutorDaoImpl;
     private List<Carro> carros;
 
     public void salvarAction() {
-        if (Validacao.formatedTFVazio(TESTE.tfPlaca) || Validacao.tfVazio(TESTE.tfNome)) {
+        if (Validacao.formatedData(TESTE.tfPlaca) || Validacao.tfVazio(TESTE.tfNome)) {
             return;
         }
-        condutorDaoImpl = new CondutorDaoImpl();
         condutor = Validacao.condutorExiste(TESTE.tfNome.getText());
         if (condutor == null) {
             salvarNovoCondutor();
@@ -46,15 +44,12 @@ public class TesteClienteControl {
         condutor.setTipo(TESTE.cbTipo.getSelectedItem().toString());
 
         carros = new ArrayList<>();
-
         carros.add(carregarDadosCarro());
-
         condutor.setCarros(carros);
-        if (condutorDaoImpl.inserir(condutor)) {
+        if (PersistenceDao.getCondutor().inserir(condutor)) {
             TestePanelControl.atualizarTabelas();
             Mensagem.msg(Mensagem.SALVO_SUCESSO);
             Uteis.limparCamposCadastro();
-
         } else {
             Mensagem.msgErro(Mensagem.ERRO_INESPERADO);
         }
@@ -62,9 +57,12 @@ public class TesteClienteControl {
 
     public void updateCondutor(Condutor c) {
         carros = new ArrayList<>();
-        carros.add(carregarDadosCarro());
-        c.setCarros(carros);
-        if (condutorDaoImpl.update(condutor)) {
+        if (Validacao.placaExistente(TESTE.tfPlaca) == null) {
+            carros.add(carregarDadosCarro());
+            c.setCarros(carros);
+        }
+        
+        if (PersistenceDao.getCondutor().update(condutor)) {
             TestePanelControl.atualizarTabelas();
             Mensagem.msg(Mensagem.ATUALIZADO_SUCESSO);
             Uteis.limparCamposCadastro();

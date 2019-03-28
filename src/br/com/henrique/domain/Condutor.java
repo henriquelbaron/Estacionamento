@@ -17,7 +17,7 @@ public class Condutor {
     private Integer id;
     private String nome;
     private String tipo;
-    private Boolean ativo;
+    private boolean ativo;
     private List<Carro> carros;
 
     public Condutor() {
@@ -37,11 +37,11 @@ public class Condutor {
         return false;
     }
 
-    public Boolean getAtivo() {
+    public boolean getAtivo() {
         return ativo;
     }
 
-    public void setAtivo(Boolean ativo) {
+    public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
 

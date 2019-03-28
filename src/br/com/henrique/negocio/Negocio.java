@@ -5,9 +5,10 @@
  */
 package br.com.henrique.negocio;
 
+import br.com.henrique.control.Validacao;
 import br.com.henrique.domain.Servico;
 import br.com.henrique.uteis.Datas;
-import java.util.Date;
+import br.com.henrique.uteis.Mensagem;
 import org.joda.time.Minutes;
 
 /**
@@ -17,13 +18,18 @@ import org.joda.time.Minutes;
 public class Negocio {
 
     public static Double calcularValorDoEstacionamento(Servico servico) {
+        double valor = 0.0;
         Minutes m = Datas.minutesEntreDatas(servico.getHoraEntrada(), servico.getHoraSaida());
         int d = (int) m.getMinutes() / 60;
-        int resto = (int) m.getMinutes() % 60;
-        if (resto <= 10) {
+        double resto = (double) m.getMinutes() % 60;
+        System.out.println(resto);
+        if (resto >= 10) {
             d++;
         }
-        double valor = 0.0;
+        if (resto < 0) {
+            d--;
+        }
+        
         if (servico.getCarro().getCondutor().getTipo().equalsIgnoreCase("Público")) {
             valor = d * 4;
         } else {

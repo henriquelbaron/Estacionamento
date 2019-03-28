@@ -5,6 +5,7 @@
  */
 package br.com.henrique.view;
 
+import br.com.henrique.control.EditarExcluirCliente;
 import br.com.henrique.control.TesteClienteControl;
 import br.com.henrique.control.TestePanelControl;
 import br.com.henrique.control.TesteServicoControl;
@@ -21,12 +22,14 @@ public class TESTE extends javax.swing.JFrame {
      */
     private TesteClienteControl clienteControl;
     private TesteServicoControl servicoControl;
+    private EditarExcluirCliente editarExcluirCliente;
 
     public TESTE() {
         initComponents();
         ThereadRelogio.start();
         clienteControl = new TesteClienteControl();
         servicoControl = new TesteServicoControl();
+        editarExcluirCliente = new EditarExcluirCliente();
         TestePanelControl.carregarCarrosEstacionados();
 
     }
@@ -39,6 +42,7 @@ public class TESTE extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jToolBar1 = new javax.swing.JToolBar();
         jLabel7 = new javax.swing.JLabel();
@@ -48,14 +52,15 @@ public class TESTE extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        bSalvarEntradaSaida = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
         jLabel14 = new javax.swing.JLabel();
+        bRefresh = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -156,6 +161,11 @@ public class TESTE extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         tfDataSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tfDataSaida.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfDataSaidaFocusLost(evt);
+            }
+        });
 
         try {
             tfDataEntrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -163,27 +173,20 @@ public class TESTE extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         tfDataEntrada.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        try {
-            tfHoraSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        tfHoraSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tfHoraSaida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfHoraSaidaActionPerformed(evt);
+        tfDataEntrada.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfDataEntradaFocusLost(evt);
             }
         });
 
         jLabel13.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel13.setText("Placa");
 
-        jButton4.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
-        jButton4.setText("Salvar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        bSalvarEntradaSaida.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        bSalvarEntradaSaida.setText("Salvar");
+        bSalvarEntradaSaida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                bSalvarEntradaSaidaActionPerformed(evt);
             }
         });
 
@@ -193,104 +196,6 @@ public class TESTE extends javax.swing.JFrame {
                 panelsMouseClicked(evt);
             }
         });
-
-        panelEditar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                panelEditarMouseClicked(evt);
-            }
-        });
-
-        panelCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tbSalvar1.setText("Alterar");
-        panelCliente.add(tbSalvar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 400, 80, 50));
-
-        tbExcluir1.setText("Excluir");
-        tbExcluir1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbExcluir1ActionPerformed(evt);
-            }
-        });
-        panelCliente.add(tbExcluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 80, 50));
-
-        tableClientes1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(tableClientes1);
-
-        panelCliente.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 390));
-
-        panelEditar.addTab("Cliente", panelCliente);
-
-        panelCarro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tbSalvar2.setText("Alterar");
-        panelCarro.add(tbSalvar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 400, 80, 50));
-
-        tbExcluir2.setText("Excluir");
-        tbExcluir2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbExcluir2ActionPerformed(evt);
-            }
-        });
-        panelCarro.add(tbExcluir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 80, 50));
-
-        tableCarros.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane4.setViewportView(tableCarros);
-
-        panelCarro.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 390));
-
-        panelEditar.addTab("Carro", panelCarro);
-
-        panelServicos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tbSalvar5.setText("Alterar");
-        panelServicos.add(tbSalvar5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 400, 80, 50));
-
-        tbExcluir5.setText("Excluir");
-        tbExcluir5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tbExcluir5ActionPerformed(evt);
-            }
-        });
-        panelServicos.add(tbExcluir5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, 80, 50));
-
-        tableServicos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane5.setViewportView(tableServicos);
-
-        panelServicos.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 390));
-
-        panelEditar.addTab("Serviços", panelServicos);
-
-        panels.addTab("Editar Arquivos", panelEditar);
 
         tableCarroEstacionados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -327,14 +232,106 @@ public class TESTE extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         panels.addTab("Carros Estacionados", jPanel1);
 
+        panelEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelEditarMouseClicked(evt);
+            }
+        });
+
+        panelCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tableClientes1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tableClientes1);
+
+        panelCliente.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 390));
+
+        panelEditar.addTab("Cliente", panelCliente);
+
+        panelCarro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tableCarros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tableCarros);
+
+        panelCarro.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 390));
+
+        panelEditar.addTab("Carro", panelCarro);
+
+        panelServicos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tableServicos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(tableServicos);
+
+        panelServicos.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 390));
+
+        labelValorTotal.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        labelValorTotal.setText("jLabel15");
+        panelServicos.add(labelValorTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, 160, 40));
+
+        panelEditar.addTab("Serviços", panelServicos);
+
+        panels.addTab("Editar Arquivos", panelEditar);
+
         jLabel14.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel14.setText("Saída");
+
+        tfHoraEntrada.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfHoraEntradaFocusLost(evt);
+            }
+        });
+
+        tfHoraSaida.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfHoraSaidaFocusLost(evt);
+            }
+        });
+
+        bRefresh.setText("R");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bRefresh, org.jdesktop.beansbinding.ELProperty.create("Atualizar Valores"), bRefresh, org.jdesktop.beansbinding.BeanProperty.create("toolTipText"));
+        bindingGroup.addBinding(binding);
+
+        bRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bRefreshActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Menu");
 
@@ -401,22 +398,13 @@ public class TESTE extends javax.swing.JFrame {
                         .addComponent(tfPlacaServico, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel14))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(tfHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(tfCor, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jLabel9))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel4))
@@ -472,15 +460,22 @@ public class TESTE extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(tfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(tfValor))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(110, 110, 110)
-                                .addComponent(tfDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(tfValor)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(bRefresh))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel14)
+                                    .addGap(15, 15, 15)
+                                    .addComponent(tfHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(tfDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(bSalvarEntradaSaida))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(panels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -494,34 +489,11 @@ public class TESTE extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(tfPlacaServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel14))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(420, 420, 420)
-                        .addComponent(tfHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(450, 450, 450)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(tfCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(370, 370, 370)
                         .addComponent(jLabel9))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(480, 480, 480)
-                        .addComponent(jButton4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(170, 170, 170)
                         .addComponent(jLabel4))
@@ -529,61 +501,91 @@ public class TESTE extends javax.swing.JFrame {
                         .addGap(390, 390, 390)
                         .addComponent(jLabel11))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(260, 260, 260)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(tfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(230, 230, 230)
                         .addComponent(jLabel6))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(340, 340, 340)
-                        .addComponent(jLabel13))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(310, 310, 310)
-                        .addComponent(jLabel10))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(tfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
                         .addComponent(jLabel8))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(390, 390, 390)
-                        .addComponent(tfDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(370, 370, 370)
-                        .addComponent(jLabel7))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(420, 420, 420)
-                        .addComponent(tfDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(130, 130, 130)
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(390, 390, 390)
                         .addComponent(tfHoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(labelCarros))
+                        .addGap(450, 450, 450)
+                        .addComponent(jLabel12))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(tfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(170, 170, 170)
+                                .addComponent(tfCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(200, 200, 200)
+                                .addComponent(tfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(310, 310, 310)
+                                .addComponent(jLabel10))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(230, 230, 230)
+                                .addComponent(tfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(70, 70, 70)
+                                .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(140, 140, 140)
+                                .addComponent(tfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(260, 260, 260)
+                                        .addComponent(jButton3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(390, 390, 390)
+                                        .addComponent(tfDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(40, 40, 40)
+                                        .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(370, 370, 370)
+                                        .addComponent(jLabel7))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(420, 420, 420)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(tfDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tfHoraSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(200, 200, 200)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(70, 70, 70)
+                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(tfPlacaServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(60, 60, 60)
+                                        .addComponent(jLabel14))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(340, 340, 340)
+                                        .addComponent(jLabel13))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(110, 110, 110)
+                                        .addComponent(labelCarros)))
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(bRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bSalvarEntradaSaida)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -606,25 +608,9 @@ public class TESTE extends javax.swing.JFrame {
         clienteControl.salvarAction();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void tfHoraSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfHoraSaidaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfHoraSaidaActionPerformed
-
-    private void tbExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbExcluir1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbExcluir1ActionPerformed
-
-    private void tbExcluir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbExcluir2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbExcluir2ActionPerformed
-
-    private void tbExcluir5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbExcluir5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbExcluir5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void bSalvarEntradaSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalvarEntradaSaidaActionPerformed
         servicoControl.salvarServicoAction(); // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_bSalvarEntradaSaidaActionPerformed
 
     private void panelsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelsMouseClicked
         TestePanelControl.carregarCliente();      // TODO add your handling code here:
@@ -638,6 +624,26 @@ public class TESTE extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         servicoControl.fecharContaAction();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tfHoraSaidaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfHoraSaidaFocusLost
+        servicoControl.atualizaTFValor();
+    }//GEN-LAST:event_tfHoraSaidaFocusLost
+
+    private void bRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRefreshActionPerformed
+        servicoControl.atualizaTFValor();        // TODO add your handling code here:
+    }//GEN-LAST:event_bRefreshActionPerformed
+
+    private void tfHoraEntradaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfHoraEntradaFocusLost
+        servicoControl.atualizaTFValor();        // TODO add your handling code here:
+    }//GEN-LAST:event_tfHoraEntradaFocusLost
+
+    private void tfDataEntradaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfDataEntradaFocusLost
+        servicoControl.atualizaTFValor();        // TODO add your handling code here:
+    }//GEN-LAST:event_tfDataEntradaFocusLost
+
+    private void tfDataSaidaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfDataSaidaFocusLost
+        servicoControl.atualizaTFValor();        // TODO add your handling code here:
+    }//GEN-LAST:event_tfDataSaidaFocusLost
 
     /**
      * @param args the command line arguments
@@ -678,10 +684,11 @@ public class TESTE extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bRefresh;
+    private javax.swing.JButton bSalvarEntradaSaida;
     public static final javax.swing.JComboBox<String> cbTipo = new javax.swing.JComboBox<>();
     private javax.swing.JButton jButton1;
     public static final javax.swing.JButton jButton3 = new javax.swing.JButton();
-    private javax.swing.JButton jButton4;
     public static final javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -716,6 +723,7 @@ public class TESTE extends javax.swing.JFrame {
     public static final javax.swing.JSeparator jSeparator1 = new javax.swing.JSeparator();
     private javax.swing.JToolBar jToolBar1;
     public static final javax.swing.JLabel labelCarros = new javax.swing.JLabel();
+    public static final javax.swing.JLabel labelValorTotal = new javax.swing.JLabel();
     public static final javax.swing.JPanel panelCarro = new javax.swing.JPanel();
     public static final javax.swing.JPanel panelCliente = new javax.swing.JPanel();
     public static final javax.swing.JTabbedPane panelEditar = new javax.swing.JTabbedPane();
@@ -725,22 +733,17 @@ public class TESTE extends javax.swing.JFrame {
     public static final javax.swing.JTable tableCarros = new javax.swing.JTable();
     public static final javax.swing.JTable tableClientes1 = new javax.swing.JTable();
     public static final javax.swing.JTable tableServicos = new javax.swing.JTable();
-    public static final javax.swing.JToggleButton tbExcluir1 = new javax.swing.JToggleButton();
-    public static final javax.swing.JToggleButton tbExcluir2 = new javax.swing.JToggleButton();
-    public static final javax.swing.JToggleButton tbExcluir5 = new javax.swing.JToggleButton();
-    public static final javax.swing.JToggleButton tbSalvar1 = new javax.swing.JToggleButton();
-    public static final javax.swing.JToggleButton tbSalvar2 = new javax.swing.JToggleButton();
-    public static final javax.swing.JToggleButton tbSalvar5 = new javax.swing.JToggleButton();
     public static final javax.swing.JTextField tfCor = new javax.swing.JTextField();
     public static final javax.swing.JFormattedTextField tfDataEntrada = new javax.swing.JFormattedTextField();
     public static final javax.swing.JFormattedTextField tfDataSaida = new javax.swing.JFormattedTextField();
     public static final javax.swing.JTextField tfHoraEntrada = new javax.swing.JTextField();
-    public static final javax.swing.JFormattedTextField tfHoraSaida = new javax.swing.JFormattedTextField();
+    public static final javax.swing.JTextField tfHoraSaida = new javax.swing.JTextField();
     public static final javax.swing.JTextField tfMarca = new javax.swing.JTextField();
     public static final javax.swing.JTextField tfModelo = new javax.swing.JTextField();
     public static final javax.swing.JTextField tfNome = new javax.swing.JTextField();
     public static final javax.swing.JFormattedTextField tfPlaca = new javax.swing.JFormattedTextField();
     public static final javax.swing.JFormattedTextField tfPlacaServico = new javax.swing.JFormattedTextField();
     public static final javax.swing.JTextField tfValor = new javax.swing.JTextField();
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

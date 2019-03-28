@@ -5,10 +5,10 @@
  */
 package br.com.henrique.uteis;
 
-import br.com.henrique.view.CadastroUsuarioFrame;
-import br.com.henrique.view.EntradaFrame;
 import br.com.henrique.view.TESTE;
+import java.awt.Color;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 
 /**
  *
@@ -16,8 +16,16 @@ import java.text.DecimalFormat;
  */
 public class Uteis {
 
+    public static Double stringParaDouble(String d) {
+        try {
+            return Double.parseDouble(d.replaceAll(",", "."));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return -1.0;
+        }
+    }
+
     public static String formatarDouble(Double d) {
-        System.out.println(d);
         DecimalFormat df = new DecimalFormat("#,##0.00");
         return df.format(d);
     }
@@ -32,7 +40,12 @@ public class Uteis {
 
     public static void limparCamposServico() {
         TESTE.tfPlacaServico.setText("");
+        TESTE.tfPlacaServico.setBackground(Color.WHITE);
         TESTE.tfHoraSaida.setText("");
+        TESTE.tfHoraSaida.setBackground(Color.WHITE);
+        TESTE.tfDataSaida.setText("");
+        TESTE.tfDataSaida.setBackground(Color.WHITE);
         TESTE.tfValor.setText("");
+        TESTE.tfValor.setBackground(Color.WHITE);
     }
 }

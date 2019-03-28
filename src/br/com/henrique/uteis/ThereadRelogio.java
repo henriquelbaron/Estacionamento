@@ -25,7 +25,6 @@ public class ThereadRelogio {
                     SimpleDateFormat sdfData = new SimpleDateFormat("dd/MM/yyyy");
                     TESTE.tfHoraEntrada.setText(sdfHora.format(d));
                     TESTE.tfDataEntrada.setText(sdfData.format(d));
-                    TESTE.tfDataSaida.setText(sdfData.format(d));
                     try {
                         Thread.sleep(60000);
                     } catch (InterruptedException e) {

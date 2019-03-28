@@ -18,12 +18,12 @@ public class Negocio {
 
     public static Double calcularValorDoEstacionamento(Servico servico) {
         Minutes m = Datas.minutesEntreDatas(servico.getHoraEntrada(), servico.getHoraSaida());
-        double d = (double) m.getMinutes() / 60;
-        double resto = (double) m.getMinutes() % 60;
+        int d = (int) m.getMinutes() / 60;
+        int resto = (int) m.getMinutes() % 60;
         if (resto <= 10) {
             d++;
         }
-        Double valor;
+        double valor = 0.0;
         if (servico.getCarro().getCondutor().getTipo().equalsIgnoreCase("Público")) {
             valor = d * 4;
         } else {

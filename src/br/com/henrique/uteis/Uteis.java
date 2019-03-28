@@ -17,7 +17,8 @@ import java.text.DecimalFormat;
 public class Uteis {
 
     public static String formatarDouble(Double d) {
-        DecimalFormat df = new DecimalFormat("#,##0,00");
+        System.out.println(d);
+        DecimalFormat df = new DecimalFormat("#,##0.00");
         return df.format(d);
     }
 

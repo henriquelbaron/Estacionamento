@@ -6,7 +6,6 @@
 package br.com.henrique.dao.impl;
 
 import br.com.henrique.dao.CondutorDao;
-import br.com.henrique.dao.factory.SessionFactory;
 import br.com.henrique.dao.factory.conexaoDao;
 import br.com.henrique.domain.Carro;
 import br.com.henrique.domain.Condutor;
@@ -52,10 +51,11 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
     @Override
     public boolean update(Condutor objeto) {
         try {
-            pstt = conn.prepareStatement("UPDATE cliente SET  nome = ?, tipo= ? where id = ?", Statement.RETURN_GENERATED_KEYS);
+            pstt = conn.prepareStatement("UPDATE cliente SET  nome = ?, tipo= ?,ativo= ? where id = ?", Statement.RETURN_GENERATED_KEYS);
             pstt.setString(1, objeto.getNome());
             pstt.setString(2, objeto.getTipo());
             pstt.setInt(3, objeto.getId());
+            pstt.setBoolean(4, objeto.getAtivo());
             gravarCarro(objeto);
             return pstt.executeUpdate() != 0;
         } catch (SQLException e) {
@@ -76,6 +76,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
                 condutor.setId(id);
                 condutor.setNome(rs.getString("nome"));
                 condutor.setTipo(rs.getString("tipo"));
+                condutor.setAtivo(rs.getBoolean("ativo"));
                 condutor.setCarros(carroDaoImpl.pesquisarCarrosDoCondutor(id));
                 return condutor;
             }
@@ -97,6 +98,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
                 condutor.setId(rs.getInt("id"));
                 condutor.setNome(rs.getString("nome"));
                 condutor.setTipo(rs.getString("tipo"));
+                condutor.setAtivo(rs.getBoolean("ativo"));
                 condutors.add(condutor);
             }
             return condutors;
@@ -134,6 +136,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
                 condutor.setId(rs.getInt("id"));
                 condutor.setNome(nome);
                 condutor.setTipo(rs.getString("tipo"));
+                condutor.setAtivo(rs.getBoolean("ativo"));
                 condutor.setCarros(carroDaoImpl.pesquisarCarrosDoCondutor(rs.getInt("id")));
                 return condutor;
             }
@@ -158,6 +161,7 @@ public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor>
                 condutor.setId(rs.getInt("id"));
                 condutor.setNome(rs.getString("nome"));
                 condutor.setTipo(rs.getString("tipo"));
+                condutor.setAtivo(rs.getBoolean("ativo"));
                 condutors.add(condutor);
             }
             return condutors;

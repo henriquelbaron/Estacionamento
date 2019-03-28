@@ -17,6 +17,7 @@ public class Condutor {
     private Integer id;
     private String nome;
     private String tipo;
+    private Boolean ativo;
     private List<Carro> carros;
 
     public Condutor() {
@@ -34,6 +35,14 @@ public class Condutor {
             }
         }
         return false;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public void setOnList(Carro c) {

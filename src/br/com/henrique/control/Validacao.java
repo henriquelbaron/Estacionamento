@@ -25,7 +25,8 @@ public class Validacao {
     }
 
     public static boolean formatedTFVazio(JFormattedTextField tf) {
-        if (tf.getText() == null || tf.getText().trim().isEmpty()) {
+        System.out.println(tf.getText().length());
+        if (tf.getText() == null || tf.getText().trim().isEmpty() || tf.getText().trim().length() != 8) {
             tf.setBackground(Color.red);
             return true;
         }

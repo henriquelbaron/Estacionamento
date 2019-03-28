@@ -23,6 +23,16 @@ public class Datas {
 
     private static SimpleDateFormat sdf;
 
+    public static String getData(Date data) {
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(data);
+    }
+
+    public static String getHora(Date data) {
+        sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(data);
+    }
+
     public static String pegarHoraAtual() {
         sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(new Date());
@@ -49,6 +59,9 @@ public class Datas {
     }
 
     public static String converterDateParaString(Date data) {
+        if (data == null) {
+            return null;
+        }
         try {
             sdf = new SimpleDateFormat("HH:mm - dd/MM/yyyy");
             return sdf.format(data);

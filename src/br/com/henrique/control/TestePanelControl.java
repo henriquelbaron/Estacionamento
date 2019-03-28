@@ -12,6 +12,7 @@ import br.com.henrique.domain.Carro;
 import br.com.henrique.domain.Condutor;
 import br.com.henrique.domain.Servico;
 import br.com.henrique.uteis.Datas;
+import br.com.henrique.uteis.Uteis;
 import br.com.henrique.view.TESTE;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TestePanelControl {
 
-    public static void carregarCarrosEstacionados() {
+    public static void atualizarTabelas() {
+        carregarCarros();
+        carregarCarrosEstacionados();
+        carregarCliente();
+        carregarServicos();
+    }
+
+    public static List<Servico> carregarCarrosEstacionados() {
         List<Servico> servicos = new ArrayList<>();
         ServicoDaoImpl servicoDaoImpl = new ServicoDaoImpl();
         servicos = servicoDaoImpl.pesquisarPorAtivo(true);
@@ -37,7 +45,8 @@ public class TestePanelControl {
             dados[i][3] = Datas.converterDateParaString(s.getHoraEntrada());
         }
         DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
-        TESTE.tableCarrosEstacionados.setModel(modelo);
+        TESTE.tableCarroEstacionados.setModel(modelo);
+        return servicos;
     }
 
     public static void carregarCliente() {
@@ -76,4 +85,22 @@ public class TestePanelControl {
         TESTE.tableCarros.setModel(modelo);
     }
 
+    public static void carregarServicos() {
+        List<Servico> servicos = new ArrayList<>();
+        ServicoDaoImpl servicoDaoImpl = new ServicoDaoImpl();
+        servicos = servicoDaoImpl.pesquisarTodos();
+        String[] colunas = {"Id", "Data Entrada", "Data Saída", "Valor", "Proprietario", "Placa"};
+        String[][] dados = new String[servicos.size()][colunas.length];
+        for (int i = 0; i < servicos.size(); i++) {
+            Servico s = servicos.get(i);
+            dados[i][0] = s.getId().toString();
+            dados[i][1] = Datas.converterDateParaString(s.getHoraEntrada());
+            dados[i][2] = Datas.converterDateParaString(s.getHoraSaida()) == null ? " " : Datas.converterDateParaString(s.getHoraSaida());
+            dados[i][3] = "R$ " + Uteis.formatarDouble(s.getValor() == null ? 0.0 : s.getValor());
+            dados[i][4] = s.getCarro().getCondutor().getNome();
+            dados[i][5] = s.getCarro().getPlaca();
+        }
+        DefaultTableModel modelo = new DefaultTableModel(dados, colunas);
+        TESTE.tableServicos.setModel(modelo);
+    }
 }

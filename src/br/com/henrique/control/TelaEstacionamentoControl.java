@@ -27,7 +27,7 @@ public class TelaEstacionamentoControl {
     public static void carregarDadosTabela() {
         ServicoDaoImpl servicoDaoImpl = new ServicoDaoImpl();
         servicos = servicoDaoImpl.pesquisarPorAtivo(true);
-        DefaultTableModel model = (DefaultTableModel) TESTE.tableCarrosEstacionados.getModel();
+        DefaultTableModel model = (DefaultTableModel) TESTE.tableCarroEstacionados.getModel();
         model.setRowCount(0);
         for (Servico servico : servicos) {
             model.addRow(new Object[]{

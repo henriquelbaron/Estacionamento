@@ -51,6 +51,7 @@ public class TesteClienteControl {
 
         condutor.setCarros(carros);
         if (condutorDaoImpl.inserir(condutor)) {
+            TestePanelControl.atualizarTabelas();
             Mensagem.msg(Mensagem.SALVO_SUCESSO);
             Uteis.limparCamposCadastro();
 
@@ -64,6 +65,7 @@ public class TesteClienteControl {
         carros.add(carregarDadosCarro());
         c.setCarros(carros);
         if (condutorDaoImpl.update(condutor)) {
+            TestePanelControl.atualizarTabelas();
             Mensagem.msg(Mensagem.ATUALIZADO_SUCESSO);
             Uteis.limparCamposCadastro();
         } else {

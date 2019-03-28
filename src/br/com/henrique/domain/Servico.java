@@ -19,6 +19,7 @@ public class Servico {
     private Date horaSaida;
     private Double valor;
     private Carro carro;
+    private Boolean ativo;
 
     public Servico() {
 
@@ -31,6 +32,14 @@ public class Servico {
         this.valor = valor;
     }
 
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
     public Carro getCarro() {
         return carro;
     }
@@ -38,8 +47,6 @@ public class Servico {
     public void setCarro(Carro carro) {
         this.carro = carro;
     }
-
-   
 
     public Integer getId() {
         return id;

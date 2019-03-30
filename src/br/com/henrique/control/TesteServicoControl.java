@@ -129,16 +129,17 @@ public class TesteServicoControl {
 
     }
 
-    public void finalizarAction() {
+    public boolean finalizarAction() {
         if (troco() < 0.0) {
             Mensagem.msgErro(Mensagem.DINHEIRO_INSUFICIENTE);
-            return;
+            return false;
         }
         PersistenceDao.getServico().update(servico);
         TestePanelControl.atualizarTabelas();
         Uteis.limparCamposServico();
         Mensagem.msg(Mensagem.SALVO_SUCESSO);
         System.gc();
+        return true;
     }
 
     public Double troco() {

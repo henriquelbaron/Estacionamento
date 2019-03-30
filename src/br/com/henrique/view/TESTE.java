@@ -26,6 +26,7 @@ public class TESTE extends javax.swing.JFrame {
 
     public TESTE() {
         initComponents();
+        this.setResizable(false);
         ThereadRelogio.start();
         clienteControl = new TesteClienteControl();
         servicoControl = new TesteServicoControl();
@@ -478,7 +479,8 @@ public class TESTE extends javax.swing.JFrame {
                             .addComponent(bSalvarEntradaSaida))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(panels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

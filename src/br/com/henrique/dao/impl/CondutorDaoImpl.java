@@ -15,7 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *id int not null primary key auto_increment,
+codigoProduto int not null,
+nomeProduto varchar(45) not null,
+valor float not null,
+quantidade int(3) not null,
+nomeCliente varchar(45) not null
  * @author ACER
  */
 public class CondutorDaoImpl extends conexaoDao implements CondutorDao<Condutor> {

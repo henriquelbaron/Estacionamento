@@ -5,8 +5,12 @@
  */
 package br.com.henrique.control;
 
+import br.com.henrique.dao.BaseDao;
+import br.com.henrique.dao.CarroDao;
+import br.com.henrique.dao.CondutorDao;
+import br.com.henrique.dao.impl.CarroDaoImpl;
+import br.com.henrique.dao.impl.CondutorDaoImpl;
 import br.com.henrique.domain.Carro;
-import br.com.henrique.domain.Condutor;
 import br.com.henrique.persistence.PersistenceDao;
 import br.com.henrique.uteis.Mensagem;
 import br.com.henrique.view.TESTE;

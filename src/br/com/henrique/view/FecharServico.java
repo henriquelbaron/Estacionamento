@@ -20,6 +20,8 @@ public class FecharServico extends javax.swing.JFrame {
 
     public FecharServico() {
         initComponents();
+        this.pack();
+        this.setResizable(false);
         servicoControl = new TesteServicoControl();
     }
 
@@ -37,23 +39,27 @@ public class FecharServico extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(300, 250));
+        setPreferredSize(new java.awt.Dimension(300, 250));
+        setResizable(false);
+        setSize(new java.awt.Dimension(300, 250));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         jLabel1.setText("Troco");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         jLabel2.setText("Total");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
 
         lblTotal.setFont(new java.awt.Font("Bahnschrift", 1, 16)); // NOI18N
         lblTotal.setText("jLabel3");
-        getContentPane().add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, -1, -1));
+        getContentPane().add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         jLabel4.setText("Recebido");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         tfRecebido.setFont(new java.awt.Font("Bahnschrift", 1, 16)); // NOI18N
         tfRecebido.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -61,10 +67,10 @@ public class FecharServico extends javax.swing.JFrame {
                 tfRecebidoFocusLost(evt);
             }
         });
-        getContentPane().add(tfRecebido, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 60, -1));
+        getContentPane().add(tfRecebido, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 60, -1));
 
         lblTroco.setFont(new java.awt.Font("Bahnschrift", 1, 16)); // NOI18N
-        getContentPane().add(lblTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 70, 20));
+        getContentPane().add(lblTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 70, 20));
 
         bFinalizar.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         bFinalizar.setText("Finalizar");
@@ -73,7 +79,7 @@ public class FecharServico extends javax.swing.JFrame {
                 bFinalizarActionPerformed(evt);
             }
         });
-        getContentPane().add(bFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 120, -1));
+        getContentPane().add(bFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 120, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -84,7 +90,9 @@ public class FecharServico extends javax.swing.JFrame {
     }//GEN-LAST:event_tfRecebidoFocusLost
 
     private void bFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinalizarActionPerformed
-        servicoControl.finalizarAction();       // TODO add your handling code here:
+        if (servicoControl.finalizarAction()) {
+            this.dispose();
+        }
     }//GEN-LAST:event_bFinalizarActionPerformed
 
     /**
